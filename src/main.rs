@@ -2,16 +2,27 @@
 extern crate glium;
 extern crate time;
 
+mod pong;
+
 fn main() {
   use glium::DisplayBuild;
   use glium::Surface;
+  use pong::Player;
+  use std::vec::Vec;
+
+  let mut players = vec![
+    Player::new(),
+    Player::new(),
+  ];
+
+
+
+  let display = glium::glutin::WindowBuilder::new().build_glium().unwrap();
 
   #[derive(Copy, Clone)]
   struct Vertex {
       position: [f32; 2],
   }
-
-  let display = glium::glutin::WindowBuilder::new().build_glium().unwrap();
 
   implement_vertex!(Vertex, position);
 
@@ -40,7 +51,7 @@ fn main() {
       #version 140
       out vec4 color;
       void main() {
-          color = vec4(1.0, 0.0, 0.0, 1.0);
+          color = vec4(1.0, 1.0, 1.0, 1.0);
       }
   "#;
 
@@ -56,7 +67,8 @@ fn main() {
     dt = t - tl;
 
     let mut target = display.draw();
-    target = draw(target);
+    target.clear_color(0.0, 0.0, 0.0, 1.0);
+    target = players[0].draw(target);
     target.draw(&vertex_buffer,
                 &indices,
                 &program,

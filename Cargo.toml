@@ -1,7 +1,8 @@
 [package]
 name = "draw_a_thing"
 version = "0.1.0"
-authors = ["Pontus Persson <pom@spotify.com>"]
+authors = ["Pontus Persson <pontus.alexander@gmail.com>"]
 
 [dependencies]
+time = "*"
 glium = "*"
