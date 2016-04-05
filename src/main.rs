@@ -3,6 +3,17 @@ extern crate glium;
 extern crate time;
 
 mod pong;
+mod render;
+
+#[test]
+fn it_works() {
+  let mut vec = pong::Vector2::new();
+  vec.set(10.0, 5.0);
+  assert_eq!(vec.getLength(), 11.18034);
+  vec.setLength(8.0);
+  assert_eq!(vec.x, 7.155418);
+  assert_eq!(vec.y, 3.577709);
+}
 
 fn main() {
   use glium::DisplayBuild;
@@ -34,7 +45,6 @@ fn main() {
 
   let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
   let indices = glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList);
-
 
   let vertex_shader_src = r#"
       #version 140
@@ -68,7 +78,6 @@ fn main() {
 
     let mut target = display.draw();
     target.clear_color(0.0, 0.0, 0.0, 1.0);
-    target = players[0].draw(target);
     target.draw(&vertex_buffer,
                 &indices,
                 &program,
