@@ -27,6 +27,8 @@ fn main() {
   ];
 
 
+  let renderer = render::Renderer::new();
+
 
   let display = glium::glutin::WindowBuilder::new().build_glium().unwrap();
 
