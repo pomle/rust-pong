@@ -18,7 +18,7 @@ impl App {
     fn render(&mut self, args: &RenderArgs) {
         use graphics::*;
 
-        const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
+        const BACKGROUND: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
         const RED: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
 
         let square = rectangle::square(0.0, 0.0, 50.0);
@@ -27,7 +27,7 @@ impl App {
 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
-            clear(GREEN, gl);
+            clear(BACKGROUND, gl);
 
             let transform = c
                 .transform
