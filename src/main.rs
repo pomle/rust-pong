@@ -9,36 +9,33 @@ use piston::event_loop::{EventSettings, Events};
 use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent};
 use piston::window::WindowSettings;
 
+pub struct Ball {
+    pos: [f64;2],
+}
+
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
     rotation: f64,  // Rotation for the square.
+    ball: Ball,
+
 }
 
 impl App {
     fn render(&mut self, args: &RenderArgs) {
-        use graphics::Transformed;
         use graphics::rectangle;
         use graphics::clear;
 
         const BACKGROUND: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
         const FOREGROUND: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
 
-        let ball = rectangle::square(0.0, 0.0, 50.0);
-        let rotation = self.rotation;
-        let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
+        let ball = rectangle::square(self.ball.pos[0], self.ball.pos[1], 50.0);
 
         self.gl.draw(args.viewport(), |context, gl| {
             // Clear the screen.
             clear(BACKGROUND, gl);
 
-            let transform = context
-                .transform
-                .trans(x, y)
-                .rot_rad(rotation)
-                .trans(-25.0, -25.0);
-
             // Draw a box rotating around the middle of the screen.
-            rectangle(FOREGROUND, ball, transform, gl);
+            rectangle(FOREGROUND, ball, context.transform, gl);
         });
     }
 
@@ -63,6 +60,9 @@ fn main() {
     let mut app = App {
         gl: GlGraphics::new(opengl),
         rotation: 0.0,
+        ball: Ball {
+            pos: [0.0, 0.0],
+        },
     };
 
     let mut events = Events::new(EventSettings::new());
