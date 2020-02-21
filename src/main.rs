@@ -11,6 +11,7 @@ use piston::window::WindowSettings;
 
 pub struct Ball {
     pos: [f64;2],
+    vel: [f64;2]
 }
 
 pub struct App {
@@ -40,8 +41,8 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
-        // Rotate 2 radians per second.
-        self.rotation += 2.0 * args.dt;
+        self.ball.pos[0] += self.ball.vel[0];
+        self.ball.pos[1] += self.ball.vel[1];
     }
 }
 
@@ -62,6 +63,7 @@ fn main() {
         rotation: 0.0,
         ball: Ball {
             pos: [0.0, 0.0],
+            vel: [1.0, 1.0],
         },
     };
 
