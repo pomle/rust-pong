@@ -16,7 +16,9 @@ pub struct App {
 
 impl App {
     fn render(&mut self, args: &RenderArgs) {
-        use graphics::*;
+        use graphics::Transformed;
+        use graphics::rectangle;
+        use graphics::clear;
 
         const BACKGROUND: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
         const FOREGROUND: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
@@ -25,11 +27,11 @@ impl App {
         let rotation = self.rotation;
         let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
 
-        self.gl.draw(args.viewport(), |c, gl| {
+        self.gl.draw(args.viewport(), |context, gl| {
             // Clear the screen.
             clear(BACKGROUND, gl);
 
-            let transform = c
+            let transform = context
                 .transform
                 .trans(x, y)
                 .rot_rad(rotation)
